@@ -2,63 +2,75 @@ import numpy as np
 from PIL import Image
 from io import BytesIO
 import streamlit as st
+import time
 from tensorflow import keras
 from tensorflow.keras.preprocessing import image
 from tensorflow.keras.preprocessing.image import load_img
 
 
-@st.cache(allow_output_mutation=True)
-def loading_model():
-    # Loading the model
-    model_dir = "/home/archihalder/Projects/Fruit Classifier/Model/model.h5"
-    loaded_model = keras.models.load_model(model_dir)
-    return loaded_model
+#@st.cache(allow_output_mutation=True, suppress_st_warning=True)
 
-
-# Labels
-train_labels = {"Apple": 0, "Banana": 1, "Mango": 2, "Orange": 3, "Pineapple": 4}
-
-
-def magic(test_img, model):
-    img = image.load_img(test_img, target_size=(128, 128))
-    img_array = image.img_to_array(img)
-    img_array = np.array(img_array) / 255.0
-
-    # Getting the labels
-    labels = dict((value, key) for key, value in train_labels.items())
-    predictions = model.predict(img_array[np.newaxis, ...])
-
-    # Displaying the output
-    acc = np.max(predictions[0]) * 100
-    print(f"Accuracy: {acc}%")
-    result = labels[np.argmax(predictions[0], axis=-1)]
-    print(f"Output: {result}")
-
-
-def main():
-    html_code = """
-    <div>
-        <h1 style="text-align: center"> Fruit Classifier </h1>
+html_temp = '''
+    <div style =  padding-bottom: 20px; padding-top: 20px; padding-left: 5px; padding-right: 5px">
+    <center><h1>Fruit Classifier</h1></center>
+    
     </div>
-    """
+    '''
 
-    st.markdown(html_code, unsafe_allow_html=True)
+st.markdown(html_temp, unsafe_allow_html=True)
+html_temp = '''
+    <div>
+    <h2></h2>
+    <center><h3>Please upload Waste Image to find its Category</h3></center>
+    </div>
+    '''
 
-    # Upload the file
-    uploaded_file = st.file_uploader("Choose an image", type=["jpeg", "png", "jpg"])
-    st.set_option("deprecation.showfileUploaderEncoding", False)
+st.set_option('deprecation.showfileUploaderEncoding', False)
+st.markdown(html_temp, unsafe_allow_html=True)
 
-    if uploaded_file is not None:
-        bytes_data = uploaded_file.read()
-        img = Image.open(BytesIO(bytes_data))
-        # img =
-        st.image(img, caption="File Uploaded", use_column_width=True)
+opt = st.selectbox("How do you want to upload the image for classification?\n", ('Please Select', 'Upload image via link', 'Upload image from device'))
+if opt == 'Upload image from device':
+    file = st.file_uploader('Select', type = ['jpg', 'png', 'jpeg'])
+    st.set_option('deprecation.showfileUploaderEncoding', False)
+    if file is not None:
+        image = Image.open(file)
 
-    model = loading_model()
-    if st.button("Predict"):
-        st.write("Predicting...")
-        st.write(magic(img, model))
+elif opt == 'Upload image via link':
 
+  try:
+    img = st.text_input('Enter the Image Address')
+    image = Image.open(urllib.request.urlopen(img))
+    
+  except:
+    if st.button('Submit'):
+      show = st.error("Please Enter a valid Image Address!")
+      time.sleep(4)
+      show.empty()
 
-if __name__ == "__main__":
-    main()
+if image is not None:
+    
+    try:
+        st.image(image, width = 300, caption = 'Uploaded Image')
+
+        if st.button('Classify'):
+            img_array = np.array(image.resize((128, 128), Image.ANTIALIAS))
+            img_array = np.array(img_array, dtype='uint8')
+            img_array = np.array(img_array) / 255.0
+
+            model_dir = "Model/model.h5"
+            model = keras.models.load_model(model_dir)
+            
+            # Labels
+            train_labels = {"Apple": 0, "Banana": 1, "Mango": 2, "Orange": 3, "Pineapple": 4}
+
+            # Getting the labels
+            labels = dict((value, key) for key, value in train_labels.items())
+            predictions = model.predict(img_array[np.newaxis, ...])
+        
+            acc = np.max(predictions[0]) * 100
+            result = labels[np.argmax(predictions[0], axis=-1)]
+            
+            st.info('The uploaded image has been classified as " {}." with confidence {}%.'.format(result, acc)) 
+
+    except:
+        st.success("Please enter an Input Image of an appropriate format :) ")
