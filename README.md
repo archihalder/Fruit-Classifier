@@ -21,7 +21,7 @@ The dataset is made from scratch. It is divided into two categories namely test 
     ```
 2. Cloning the repository:- 
     ```bash
-    git clone git@github.com:archihalder/Fruit-Classifier.git
+    git clone https://github.com/archihalder/Fruit-Classifier.git
     ```
 3. Run the web app:-
     ```bash
