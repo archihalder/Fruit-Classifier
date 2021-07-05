@@ -4,7 +4,7 @@ This projects helps to classify different types of fruits using Convolutional Ne
 
 ----
 <h2> Dataset </h2>
-The [Dataset](https://github.com/archihalder/Fruit-Classifier/Data) is made from scratch. It is divided into two categories namely test and train. Each of those categories is divided into 5 classes.
+The dataset is made from scratch. It is divided into two categories namely test and train. Each of those categories is divided into 5 classes.
 
 1. Apple
 2. Banana
