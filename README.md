@@ -1,10 +1,10 @@
 <h1 align="center"> Fruit Classifier </h1>
 
-This projects helps to classify different types of fruits using Convolutional Neural Networks (CNNs). It is neural network that has one or more convolutional layers and are mainly used for image processing, classification, segmentation and also for other corelated data. CNNs are used for their high accuracy.
+This project helps to classify different types of fruits using Convolutional Neural Networks (CNNs). It is a neural network that has one or more convolutional layers. It is mainly used for image processing, classification, segmentation, and also for other correlated data. CNNs are used for their high accuracy.
 
 ----
 <h2> Dataset </h2>
-The dataset is made from scratch. It is divided into two categories namely test and train. Each of those categories is divided into 5 classes.
+The dataset is made from scratch. It is divided into two categories namely test and train. Each of those categories is divided into five classes.
 
 1. Apple
 2. Banana
