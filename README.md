@@ -28,3 +28,8 @@ The [Dataset](https://github.com/archihalder/Fruit-Classifier/Data) is made from
     streamlit run app.py
     ```
 4. To close the app from the terminal, press Ctrl+C.
+
+----
+<h2> Demo </h2>
+
+![](fruit-classifier-demo.gif)
