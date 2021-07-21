@@ -23,11 +23,15 @@ The dataset is made from scratch. It is divided into two categories namely test 
     ```bash
     git clone https://github.com/archihalder/Fruit-Classifier.git
     ```
-3. Run the web app:-
+3. Change the directory:-
+    ```bash
+    cd Fruit-Classifier
+    ```
+4. Run the web app:-
     ```bash
     streamlit run app.py
     ```
-4. To close the app from the terminal, press Ctrl+C.
+5. To close the app from the terminal, press Ctrl+C.
 
 ----
 <h2> Demo </h2>
